@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="US-ASCII">
+    <title>Get all data records</title>
+    
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="pages/jslibs/angular-xeditable-0.1.8/css/xeditable.css"          rel="stylesheet">
+    <!--  <link href="pages/sportsdata.css" rel="stylesheet" type="text/css"  />  -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="pages/jslibs/angular-xeditable-0.1.8/js/xeditable.js"></script>
+
+    <script src="pages/dumprecords.js"></script>
+
+    <style>
+        body    {width: 95%; margin: 20px auto; /* center */ padding: 20px; border: 1px solid black;}
+    </style>
+    </head>
+<!-- 
+
+                    <td style="width:20%">Duration</td>
+
+                    <td>{{workout.durationString}}</td>
+                    
+
+ -->
+    <body data-ng-app="myApp">
+        <h1>Dumping Run Summaries</h1>
+
+        <div data-ng-controller="DumpRecords" class="SportsTable">
+
+            <table class="table table-condensed table-striped table-hover">
+                <tr>
+                    <td style="width:5%">Id</td>
+                    <td style="width:20%">Workout Name</td>
+                    <td style="width:25%">Date</td>
+                    <td style="width:10%">Calories</td>
+                    <td style="width:5%">Steps</td>
+                    
+                    <td style="width:15%">Edit</td>
+                </tr>
+                <tr data-ng-repeat="workout in runsummaries">
+                    <td>{{workout.id}}</td>
+                    <td>
+                    <span data-editable-text="workout.workoutName"
+                          data-e-name="name"
+                          data-e-form="rowform"
+                          data-onbeforesave="checkName($data, workout.id)" data-e-required>
+                        {{workout.workoutName}}
+                    </span>
+                    </td>
+                    <td>
+                        <span data-editable-text="workout.workoutTime"
+                              data-e-name="workoutTime"
+                              data-e-form="rowform"
+                              data-onbeforesave="checkTime($data, workout.workoutTime)" data-e-required>
+                              {{workout.workoutTime}}
+                        </span>
+                    </td>
+                    
+                    <td>
+                        <span data-editable-text="workout.calories"
+                              data-e-name="calories"
+                              data-e-form="rowform"
+                              data-onbeforesave="checkCalories($data, workout.calories)" data-e-required>
+                            {{workout.calories}}
+                        </span>
+
+                    </td>
+                    <td>
+                        <span data-editable-text="workout.stepCounts.walkEnd"
+                              data-e-name="steps"
+                              data-e-form="rowform"
+                              data-onbeforesave="checkSteps($data, workout.stepCounts.walkEnd)"
+                              data-e-required>
+                            {{workout.stepCounts.walkEnd}}
+                        </span>
+                     </td>
+
+                    <td style='white-space: nowrap'>
+                        <form data-editable-form name="rowform"
+                              data-onbeforesave="saveRow($data, workout.id)"
+                              data-ng-show="rowform.$visible"
+                              data-shown="false"
+                              >
+                            <button type="submit"
+                                    class="btn-mini btn-primary"
+                                    data-ng-disabled="rowform.$waiting"
+                                    >Save</button>
+                            <button type="button"
+                                    class="btn-mini "
+                                    data-ng-disabled="rowform.$waiting"
+                                    data-ng-click="rowform.$cancel()">Cancel</button>
+                        </form>
+
+                        <div class="buttons" data-ng-show="!rowform.$visible">
+                            <button class="btn-mini btn-primary" type="button" data-ng-click="rowform.$show()">
+                                <span class="glyphicon glyphicon-cog"></span>Edit</button>
+                            <button class="btn-mini"             type="button" data-ng-click="removeUser($index)">
+                                <span class="glyphicon glyphicon-remove"></span>Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+       </div>
+    </body>
+</html>
