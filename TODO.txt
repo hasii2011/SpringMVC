@@ -1,0 +1,6 @@
+
+
+1) Fix unit test so they have a common base class
+2) Move logging set up to Utility class
+3) Load logging property file from class path
+4) Better yet convert to logback
